@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Implementation-Title: FaceBookBoot
+Implementation-Version: 1.0
+Built-By: shubham.s
+Implementation-Vendor-Id: com.spring.social
+Build-Jdk: 1.8.0_144
+Implementation-URL: http://projects.spring.io/spring-boot/FaceBookBoot
+ /
+Created-By: Maven Integration for Eclipse
+Implementation-Vendor: Pivotal Software, Inc.
+

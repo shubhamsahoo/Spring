@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<!-- Handler Mapping -->
+	  <bean class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+	     <property name="mappings">
+	         <props>
+	            <prop key="home.htm">shc</prop>
+	            <prop key="wish.htm">wmc</prop>
+	         </props>
+	     </property>
+	    <!--  <property name="order" value="10"/> -->
+	    <property name="interceptors">
+	        <array>
+	           <ref  bean="tci"/>
+	        </array>
+	    </property>
+	 </bean>
+	 
+	 <!-- Interceptor -->
+	 <bean id="tci"  class="com.nt.interceptor.TimeoutCheckingInterceptor"/>
+	  
+	
+	<!-- Controllers -->
+	<bean id="shc" class="org.ar.controller.HomeController"/>
+	<bean id="wmc"  class="org.ar.controller.WishMessageController"/>
+
+<!-- View Resolvers -->
+	<bean
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/pages/"></property>
+		<property name="suffix" value=".jsp"></property>
+	</bean>
+</beans>

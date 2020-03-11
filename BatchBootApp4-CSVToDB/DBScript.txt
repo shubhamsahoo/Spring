@@ -1,0 +1,1 @@
+SQL> create table  EXam_Result(id number(5) primary key,semester number(5) ,percentage float ,dob date);

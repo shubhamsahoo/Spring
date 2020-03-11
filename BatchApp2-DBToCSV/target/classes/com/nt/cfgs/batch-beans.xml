@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:batch="http://www.springframework.org/schema/batch"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+		http://www.springframework.org/schema/batch http://www.springframework.org/schema/batch/spring-batch-3.0.xsd">
+	<import resource="batch-infra.xml" />
+
+	<!-- DataSource cfg -->
+	<bean id="hkCP" class="com.zaxxer.hikari.HikariDataSource">
+		<property name="driverClassName"
+			value="com.mysql.cj.jdbc.Driver" />
+		<property name="jdbcUrl" value="jdbc:mysql:///EXAM_DATA" />
+		<property name="username" value="root" />
+		<property name="password" value="root" />
+	</bean>
+
+	<!-- Item Reader cfg -->
+	<bean id="jcir"
+		class="org.springframework.batch.item.database.JdbcCursorItemReader">
+		<property name="dataSource" ref="hkCP" />
+		<property name="sql"
+			value="SELECT  ID,DOB,SEMESTER,PERCENTAGE FROM EXAM_RESULT" />
+		<property name="rowMapper">
+			<bean class="com.nt.mapper.ExamResultRowMapper" />
+		</property>
+	</bean>
+
+	<!-- Item PRocessor cfg -->
+	<bean id="erip" class="com.nt.processor.ExamResultItemProcessor" />
+
+	<!-- Item Writer cfg -->
+
+	<bean id="ffiw"
+		class="org.springframework.batch.item.file.FlatFileItemWriter">
+		<property name="resource" value="file:csv/SuperBrains.csv" />
+		<property name="lineAggregator">
+			<!-- An Aggregator which converts an object into delimited list of strings -->
+			<bean
+				class="org.springframework.batch.item.file.transform.DelimitedLineAggregator">
+				<property name="delimiter" value="," />
+				<property name="fieldExtractor">
+					<!-- Extractor which returns the value of beans property through reflection -->
+					<bean
+						class="org.springframework.batch.item.file.transform.BeanWrapperFieldExtractor">
+						<property name="names" value="id, sem, percentage, dob" />
+					</bean>
+				</property>
+			</bean>
+		</property>
+	</bean>
+	
+	<!-- Job Listener  cfg-->
+	  <bean id="jobListener"  class="com.nt.listener.ExamResultJobListener"/>
+	
+	<batch:job id="job1"  job-repository="jobRep">
+	    <batch:step id="step1">
+	         <batch:tasklet transaction-manager="txMgmr">
+	                  <batch:chunk  reader="jcir"   writer="ffiw"  processor="erip"  commit-interval="1"/>
+	         </batch:tasklet>
+	    </batch:step>
+	    <batch:listeners>
+	           <batch:listener   ref="jobListener"/>
+	    </batch:listeners>
+	</batch:job>
+
+</beans>
