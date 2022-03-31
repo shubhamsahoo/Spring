@@ -43,7 +43,7 @@
     <finalName>MVC100pCode-WishApp</finalName>
   </build>
   <properties>
-  	<spring.ver>5.2.4.RELEASE</spring.ver>
+  	<spring.ver>5.3.18</spring.ver>
     <failOnMissingWebXml>false</failOnMissingWebXml>
   </properties>
 </project>
