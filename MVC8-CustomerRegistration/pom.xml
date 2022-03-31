@@ -82,6 +82,6 @@
     <finalName>MVC7-CustomerRegistration</finalName>
   </build>
   <properties>
-  	<spring.ver>3.2.9.RELEASE</spring.ver>
+  	<spring.ver>5.3.18</spring.ver>
   </properties>
 </project>
