@@ -87,7 +87,7 @@
     <finalName>MVC10-CURDOpeations-AllControllers</finalName>
   </build>
   <properties>
-  	<spring.ver>3.2.18.RELEASE</spring.ver>
+  	<spring.ver>5.3.18</spring.ver>
   	    <failOnMissingWebXml>false</failOnMissingWebXml>
   </properties>
 </project>
